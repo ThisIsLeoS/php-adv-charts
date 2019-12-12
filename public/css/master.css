@@ -34,25 +34,17 @@ li {
 /* rules used in specific parts of the page */
 
 html {
-  /* to make a reference for the percentage heights of thix box's children */
-  height: 100%;
   font-size: 14px;
 }
 
 body {
-  /* to make a reference for the percentage heights of thix box's children */
-  height: 100%;
   font-family: sans-serif;
-}
-
-main {
-  height: 100%;
 }
 
 .chart-container {
   position: relative;
-  width: 80%;
-  height: 80%;
+  width: 800px;
+  height: 400px;
 }
 
 /* /rules used in specific parts of the page */

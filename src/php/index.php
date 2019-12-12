@@ -16,16 +16,16 @@
   <!-- main -->
   <main>
     <div class="chart-container">
-      <canvas class="chart"></canvas>
+      <canvas id="chart-line"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="chart-pie"></canvas>
     </div>
   </main>
   <!-- /main -->
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-  <!-- handlebars -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.min.js"></script>
 
   <!-- moment.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

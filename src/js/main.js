@@ -7,7 +7,7 @@ function getData() {
         "url": "getAllMatches.php",
         "method": "GET",
         "success": function(data) {
-            printChart(data);
+            parseData(data);
         },
         "error": function (iqXHR, textStatus, errorThrown) {
             alert(
@@ -19,13 +19,26 @@ function getData() {
     });
 }
 
-function printChart(data) {
-    var ctx = document.getElementsByClassName("chart")[0].getContext('2d');
+function parseData(data) {
+    var fatturato = data.fatturato;
+    var fatturatoByAgent = data.fatturato_by_agent;
+    var labels = [];
+    var salesNums = [];
+    printChart(fatturato.type, fatturato.data, moment.months());
+    for (var label in fatturatoByAgent.data) {
+        labels.push(label);
+        salesNums.push(fatturatoByAgent.data[label]);
+    }
+    printChart(fatturatoByAgent.type, salesNums, labels);
+}
+
+function printChart(type, data, labels) {
+    var ctx = document.getElementById("chart-" + type).getContext('2d');
     Chart.defaults.global.defaultFontSize = 14;
     var chart = new Chart(ctx, {
-        "type": 'line',
+        "type": type,
         "data": {
-            "labels": moment.months(),
+            "labels": labels,
             "datasets": [{
                 "label": '# of sales',
                 "backgroundColor": 'rgb(135,206,250)',
@@ -36,6 +49,13 @@ function printChart(data) {
         "options": {
             "maintainAspectRatio": false,
             "responsive": true,
+            "scales": {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }],
+            }
         },
     });
 }
