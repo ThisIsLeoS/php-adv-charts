@@ -1,0 +1,57 @@
+/* reset rules */
+    a:hover {
+
+        /* to overwrite bootstrap's CSS */
+        text-decoration: none;
+    }
+
+    h1, h2, ol, p, ul {
+
+        /* to overwrite bootstrap's CSS */
+        margin-bottom: 0;
+    }
+    
+    input:focus {
+
+        /* to overwrite chrome's CSS */
+        outline: none;
+    }
+
+    ol, ul {
+
+        /* to overwrite bootstrap's CSS */
+        padding-left: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+/* /reset rules */
+
+/* rules used in specific parts of the page */
+    html {
+
+        /* to make a reference for the percentage heights of thix box's children */
+        height: 100%;
+
+        font-size: 14px;
+    }
+    
+    body {
+
+        /* to make a reference for the percentage heights of thix box's children */
+        height: 100%;
+
+        font-family: sans-serif;
+    }
+
+    main {
+        height: 100%;
+    }
+
+    .chart-container {
+        position: relative;
+        width: 80%;
+        height: 80%;
+    }
+/* /rules used in specific parts of the page */
