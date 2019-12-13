@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,18 +12,27 @@
   <!-- personal CSS -->
   <link rel="stylesheet" href="css/master.css">
 </head>
+
 <body>
 
   <!-- main -->
   <main>
-    <div class="chart-container">
+    <!-- <div class="chart-container">
       <canvas id="chart-line"></canvas>
     </div>
     <div class="chart-container">
       <canvas id="chart-pie"></canvas>
-    </div>
+    </div> -->
   </main>
   <!-- /main -->
+
+  <!-- templates -->
+  <template id="chart-template">
+    <div class="chart-container">
+      <canvas id="chart-line"></canvas>
+    </div>
+  </template>
+  <!-- templates -->
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -36,4 +46,5 @@
   <!-- personal JS -->
   <script src="js/main.js"></script>
 </body>
+
 </html>

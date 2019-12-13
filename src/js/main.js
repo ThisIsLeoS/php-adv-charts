@@ -33,7 +33,7 @@ function parseData(data) {
 }
 
 function printChart(type, data, labels) {
-    var ctx = document.getElementById("chart-" + type).getContext('2d');
+    var ctx = "chart-" + type;
     Chart.defaults.global.defaultFontSize = 14;
     var chart = new Chart(ctx, {
         "type": type,
