@@ -35,6 +35,7 @@
         "operator-linebreak": "off",
         "padded-blocks": "off",
         "prefer-arrow-callback": "off",
+        "prefer-destructuring": "off",
         "prefer-template": "off",
         "quote-props": [
             "error",
