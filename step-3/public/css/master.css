@@ -1,28 +1,30 @@
 /* rules used in specific parts of the page */
 
 html {
+  height: 100%;
   font-size: 14px;
 }
 
 body {
+  display: -webkit-box;
+  display: flex;
+  height: 100%;
   font-family: sans-serif;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
 }
 
 main {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: center;
-          align-items: center;
+  margin: auto;
 }
 
 .chart-container {
   position: relative;
   width: 800px;
   height: 400px;
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 /* /rules used in specific parts of the page */
