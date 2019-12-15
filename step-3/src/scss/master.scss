@@ -1,33 +1,3 @@
-/* reset rules */
-    a:hover {
-
-        /* to overwrite bootstrap's CSS */
-        text-decoration: none;
-    }
-
-    h1, h2, ol, p, ul {
-
-        /* to overwrite bootstrap's CSS */
-        margin-bottom: 0;
-    }
-    
-    input:focus {
-
-        /* to overwrite chrome's CSS */
-        outline: none;
-    }
-
-    ol, ul {
-
-        /* to overwrite bootstrap's CSS */
-        padding-left: 0;
-    }
-
-    li {
-        list-style: none;
-    }
-/* /reset rules */
-
 /* rules used in specific parts of the page */
     html {
         font-size: 14px;
@@ -36,10 +6,17 @@
     body {
         font-family: sans-serif;
     }
+    
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     .chart-container {
         position: relative;
         width: 800px;
         height: 400px;
+        margin: 20px 0;
     }
 /* /rules used in specific parts of the page */

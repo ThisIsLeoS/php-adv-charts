@@ -1,11 +1,29 @@
+var queryStringParams = new URLSearchParams(window.location.search);
+var accessLvl = queryStringParams.get("level");
+
+// if the query string is empty, the access level will be "guest"
+if (accessLvl === null) accessLvl = "guest";
+
 getData();
 
 function getData() {
     $.ajax({
-        "url": "getAllMatches.php",
+        "url": "getChartsByAccessLvl.php",
         "method": "GET",
-        "success": function(data) {
-            parseData(data);
+        "data": {
+            "level": accessLvl,
+        },
+        "success": function(charts) {
+            if (accessLvl === "guest") prepareAndPrintFatturato(charts.fatturato);
+            else if (accessLvl === "employee") {
+                prepareAndPrintFatturato(charts.fatturato);
+                prepareAndPrintFatturatoByAgent(charts.fatturato_by_agent);
+            }
+            else if (accessLvl === "clevel") {
+                prepareAndPrintFatturato(charts.fatturato);
+                prepareAndPrintFatturatoByAgent(charts.fatturato_by_agent);
+                prepareAndPrintTeamEfficiency(charts.team_efficiency);
+            }
         },
         "error": function (iqXHR, textStatus, errorThrown) {
             alert(
@@ -17,22 +35,28 @@ function getData() {
     });
 }
 
-function parseData(data) {
-    var fatturato = data.fatturato;
-    var fatturatoByAgent = data.fatturato_by_agent;
-    var labels = [];
-    var salesNums = [];
-    printChart(fatturato.type, fatturato.data, moment.months());
-    for (var label in fatturatoByAgent.data) {
-        if (fatturatoByAgent.data.hasOwnProperty.call(fatturatoByAgent.data, label)) {
-            labels.push(label);
-            salesNums.push(fatturatoByAgent.data[label]);
-        }
-    }
-    printChart(fatturatoByAgent.type, salesNums, labels);
+function prepareAndPrintFatturato(fatturato) {
+    var datasets = getFatturatoDatasets(fatturato.data, "sales");
+    var scales = getFatturatoScales();
+    printChart(fatturato.type, moment.months(), datasets, scales);
 }
 
-function printChart(type, data, labels) {
+function prepareAndPrintFatturatoByAgent(fatturatoByAgent) {
+    var labels = Object.keys(fatturatoByAgent.data);
+    var datasets = getFatturatoByAgentDatasets(Object.values(fatturatoByAgent.data), "");
+    var scales = getFatturatoByAgentScales();
+    printChart(fatturatoByAgent.type, labels, datasets, scales);
+}
+
+function prepareAndPrintTeamEfficiency(teamEfficiency) {
+    var datasetsData = Object.values(teamEfficiency.data);
+    var datasetsLabels = Object.keys(teamEfficiency.data);
+    var datasets = getTeamEfficiencyDatasets(datasetsData, datasetsLabels);
+    var scales = getTeamEfficiencyScales();
+    printChart(teamEfficiency.type, moment.months(), datasets, scales);
+}
+
+function printChart(type, labels, datasets, scales) {
     // the chart template is cloned and appended
     var docFragment = $("#chart-template").prop("content");
     var chartTemplate = $(docFragment).children(".chart-container").clone();
@@ -44,41 +68,92 @@ function printChart(type, data, labels) {
         "type": type,
         "data": {
             "labels": labels,
-            "datasets": [
-                getChartDatasets(type, data)
-            ],
+            "datasets": datasets,
         },
         "options": {
             "maintainAspectRatio": false,
             "responsive": true,
-            "scales": {
-                "yAxes": [{
-                    "ticks": {
-                        "beginAtZero": true,
-                    }
-                }],
-            }
+            "scales": scales,
         },
     });
 }
 
-function getChartDatasets(type, data) {
-    var dataSets = {
-        "data": data,
+function getFatturatoDatasets(data, labels) {
+    return [
+        {
+            "data": data,
+            "label": labels,
+            "backgroundColor": "rgb(135,206,250)",
+            "borderColor": "rgb(0,191,255)",
+        },
+    ];
+}
+
+function getFatturatoByAgentDatasets(data, labels) {
+    return [
+        {
+            "data": data,
+            "label": labels,
+            "backgroundColor": "rgb(255,165,0)",
+            "borderColor": "rgb(255,69,0)",
+        },
+    ];
+}
+
+
+function getTeamEfficiencyDatasets(data, labels) {
+    return [
+        {
+            "data": data[0],
+            "label": labels[0],
+            "backgroundColor": "rgba(135,206,250,.2)",
+            "borderColor": "rgb(0,191,255)",
+        },
+        {
+            "data": data[1],
+            "label": labels[1],
+            "backgroundColor": "rgba(255,165,0,.2)",
+            "borderColor": "rgb(255,69,0)",
+        },
+        {
+            "data": data[2],
+            "label": labels[2],
+            "backgroundColor": "rgba(144,238,144,.2)",
+            "borderColor": "rgb(0,128,0)",
+        },
+    ];
+}
+
+function getFatturatoScales() {
+    return {
+        "yAxes": [{
+            "ticks": {
+                "beginAtZero": true,
+            },
+        }],
     };
+}
 
-    // properties specific for the line chart
-    if (type === "line") {
-        dataSets.label = "sales";
-        dataSets.backgroundColor = "rgb(135,206,250)";
-        dataSets.borderColor = "rgb(0,191,255)";
-    }
+function getFatturatoByAgentScales() {
+    return {
+        "yAxes": [{
+            "ticks": {
+                "beginAtZero": true,
+                "display": false,
+            },
+            "gridLines": {
+                "display": false,
+            },
+        }],
+    };
+}
 
-    // properties specific for the pie chart
-    if (type === "pie") {
-        dataSets.backgroundColor = "rgb(255,165,0)";
-        dataSets.borderColor = "rgb(255,69,0)";
-    }
-
-    return dataSets;
+function getTeamEfficiencyScales() {
+    return {
+        "yAxes": [{
+            "ticks": {
+                "beginAtZero": true,
+            },
+        }],
+    };
 }

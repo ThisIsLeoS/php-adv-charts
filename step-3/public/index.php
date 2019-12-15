@@ -20,6 +20,7 @@
 
   <!-- templates -->
   <template id="chart-template">
+    <!-- reason for using a chart container: https://www.chartjs.org/docs/latest/general/responsive.html -->
     <div class="chart-container">
       <canvas class="chart"></canvas>
     </div>
