@@ -135,17 +135,7 @@ function getFatturatoScales() {
 }
 
 function getFatturatoByAgentScales() {
-    return {
-        "yAxes": [{
-            "ticks": {
-                "beginAtZero": true,
-                "display": false,
-            },
-            "gridLines": {
-                "display": false,
-            },
-        }],
-    };
+    return {};
 }
 
 function getTeamEfficiencyScales() {
