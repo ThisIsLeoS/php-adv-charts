@@ -6,20 +6,24 @@
     echo json_encode($filteredCharts);
 
     function filterChartsByAccessLvl($accessLvl, $charts) {
-        $filteredCharts = $charts;
+        $filteredCharts = [];
         if ($accessLvl === "guest") {
-            /* the elements with access level "employee" or "clevel" are removed from the array */
-            foreach ($filteredCharts as $chartName => $chartData) {
-                if ($chartData["access"] === "employee" || $chartData["access"] === "clevel") {
-                    unset($filteredCharts[$chartName]);
-                }
+            // push into the array all the charts with access level "guest"
+            foreach ($charts as $chartName => $chart) {
+                if ($chart["access"] === "guest") $filteredCharts[$chartName] = $chart;
             }
         }
         else if ($accessLvl === "employee") {
-            // the elements with access level "clevel" are removed from the array
-            foreach ($filteredCharts as $chartName => $chartData) {
-                if ($chartData["access"] === "clevel") unset($filteredCharts[$chartName]);
+            // push into the array all the charts with access level "guest" or "employee"
+            foreach ($charts as $chartName => $chart) {
+                if ($chart["access"] === "guest" || $chart["access"] === "employee") {
+                    $filteredCharts[$chartName] = $chart;
+                }
             }
+        }
+        else if ($accessLvl === "clevel") {
+            // copy all the elements into the array
+            $filteredCharts = $charts;
         }
         return $filteredCharts;
     }
