@@ -3,7 +3,8 @@ What was used:
 - CSS (with Flexbox)
 - JavaScript
     - jQuery
-    - Chart js
+    - Chart.js
+    - Moment.js
 - PHP
 - Laravel mix
 
